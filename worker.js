@@ -1,11 +1,11 @@
 addEventListener('fetch', event => {
   event.respondWith(proxy(event));
-})
+});
 
 async function proxy(event) {
   let url = new URL(event.request.url);
-  url.hostname = "disqus.com"; //change this
-  event.request.url = url;
+  url.hostname = "disqus.com";
+  
   let parameter = {
     headers: {
       'Host': 'disqus.com',
@@ -26,6 +26,5 @@ async function proxy(event) {
     parameter.headers.Origin = event.request.headers.get("Origin");
   }
 
-  let request = new Request(url, event.request);
-  return fetch(request, parameter);
+  return fetch(new Request(url, event.request), parameter);
 }
