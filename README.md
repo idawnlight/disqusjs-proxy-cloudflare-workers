@@ -2,7 +2,7 @@
 
 proxy disqus api via cloudflare workers
 
-demo: [https://disqus.emiria.moe/api/](https://disqus.emiria.moe/api/)
+demo: [https://disqus.emiria.moe/api/](https://disqus.emiria.moe/api/) && [https://disqus.dawn.workers.dev/api/](https://disqus.dawn.workers.dev/api/)
 
 （此项目基于 CVM 开发模式，显然我完全不会 JavaScript
 
