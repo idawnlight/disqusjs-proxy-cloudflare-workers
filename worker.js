@@ -3,27 +3,29 @@ addEventListener('fetch', event => {
 });
 
 async function proxy(event) {
+  const getReqHeader = (key) => event.request.headers.get(key);
+
   let url = new URL(event.request.url);
   url.hostname = "disqus.com";
-  
+
   let parameter = {
     headers: {
       'Host': 'disqus.com',
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0',
-      'Accept': '*/*',
-      'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
-      'Accept-Encoding': 'gzip, deflate, br',
+      'User-Agent': getReqHeader("User-Agent"),
+      'Accept': getReqHeader("Accept"),
+      'Accept-Language': getReqHeader("Accept-Language"),
+      'Accept-Encoding': getReqHeader("Accept-Encoding"),
       'Connection': 'keep-alive',
       'Cache-Control': 'max-age=0'
     }
   };
 
   if (event.request.headers.has("Referer")) {
-    parameter.headers.Referer = event.request.headers.get("Referer");
+    parameter.headers.Referer = getReqHeader("Referer");
   }
 
   if (event.request.headers.has("Origin")) {
-    parameter.headers.Origin = event.request.headers.get("Origin");
+    parameter.headers.Origin = getReqHeader("Origin");
   }
 
   return fetch(new Request(url, event.request), parameter);
